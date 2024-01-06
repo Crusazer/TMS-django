@@ -6,7 +6,11 @@
     {{ article.title }}
 </h1>
 <ul>
-    Author: {{ article.author }}
+    Authors:
+    {% for author in authors %}
+    <a href="{% url 'articles:author' author.id %}">{{ author.first_name }} {{ author.last_name }}</a>
+    {% if not forloop.last %},{% endif %}
+    {% endfor %}
 </ul>
 <ul>
     {{ article.text }}

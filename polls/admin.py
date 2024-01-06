@@ -10,7 +10,8 @@ class ChoiceInline(admin.TabularInline):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    readonly_fields = ["was_published_recently", ]
+    actions = ["approve_all_selected_question", "reject_all_selected_question"]
+    readonly_fields = ["was_published_recently"]
     list_display = ["question_text", "pub_date", "was_published_recently"]
     list_filter = ['pub_date', 'status']
     search_fields = ['question_text']
@@ -19,6 +20,14 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['pub_date', 'was_published_recently']})
     ]
     inlines = [ChoiceInline]
+
+    @admin.action(description="Approve all selected questions")
+    def approve_all_selected_question(self, request, queryset):
+        queryset.update(status=Question.Status.APPROVED)
+
+    @admin.action(description="Reject all selected questions")
+    def reject_all_selected_question(self, request, queryset):
+        queryset.update(status=Question.Status.REJECTED)
 
 
 @admin.register(Choice)

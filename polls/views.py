@@ -7,6 +7,7 @@ from django.views import generic
 from polls.forms import QuestionForm
 from polls.models import Question, Choice
 
+from .signals import *
 
 # Create your views here.
 class IndexView(generic.ListView):

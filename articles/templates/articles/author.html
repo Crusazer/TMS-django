@@ -1,0 +1,13 @@
+{% extends 'articles/base.html' %}
+
+{% block body %}
+<div style="text-align: center; background: #39eda2">Author</div>
+<ul>First name: {{ author.first_name }}</ul>
+<ul>Last name: {{ author.last_name }}</ul>
+<ul>Day of birth: {{ author.date_of_birth }}</ul>
+<ul>Articles:
+    {% for article in articles %}
+    <li><a href="{% url 'articles:article' article.id %}"> {{ article.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

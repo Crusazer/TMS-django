@@ -1,6 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import render, redirect
-from .models import Article
+from .models import Article, Author
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
@@ -14,7 +14,8 @@ def index(request):
 def detail(request, article_id: int):
     article = get_object_or_404(Article, id=article_id)
     votes = article.users.aggregate(count=Count('id'))['count']
-    context = {'article': article, 'votes': votes}
+    authors = article.authors.all()
+    context = {'article': article, 'votes': votes, 'authors': authors}
     return render(request, 'articles/article.html', context)
 
 
@@ -26,3 +27,10 @@ def like(request, article_id: int):
     else:
         article.users.add(User.objects.get(pk=1))
     return redirect('articles:article', article_id=article_id)
+
+
+def author(request, author_id: int):
+    author_ = get_object_or_404(Author, pk=author_id)
+    articles = author_.articles.all()
+    context = {'author': author_, 'articles': articles}
+    return render(request, 'articles/author.html', context)
