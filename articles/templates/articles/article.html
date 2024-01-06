@@ -1,0 +1,18 @@
+{% extends 'articles/base.html' %}
+
+{% block body %}
+
+<h1 align="center">
+    {{ article.title }}
+</h1>
+<ul>
+    Author: {{ article.author }}
+</ul>
+<ul>
+    {{ article.text }}
+</ul>
+<ul>
+    Likes: {{ votes }}
+</ul>
+&emsp;<a href=" {% url 'articles:like' article.id %}" class="btn btn-primary">Like</a>
+{% endblock %}

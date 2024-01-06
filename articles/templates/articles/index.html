@@ -1,0 +1,14 @@
+{% extends 'articles/base.html' %}
+
+{% block body %}
+{% if not articles %}
+    <h3 align="center">There are no articles!</h3>
+{% else %}
+<p>All articles:</p>
+<ul>
+    {% for article in articles %}
+    <li><a href="{% url 'articles:article' article.id %}">{{ article.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

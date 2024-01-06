@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{% block title %}Articles APP{% endblock %}</title>
+</head>
+<body>
+<a href="{% url 'polls:index' %}"><img src="https://netstorage.ringcentral.com/appext/logo/
+kNku72HNQPWCo-uLCKS4Hw~wCZbXGy1Qu-z3dzQ3U_j7Q/b8e47126-bf75-41df-bbf0-844db0a925a4.png" height="40"/></a>
+<a href="{% url 'articles:index' %}"><img src="https://yt3.googleusercontent.com/
+xDY6cOwkcDZHAO6oxmZJRWxy2Jg38fFUe_QefYGQ1_zWpVQKd3Z8xMFq7v4qNHc_OBYw_lp0_g=s900-c-k-c0x00ffffff-no-rj" height="40"/></a>
+<a href="{% url 'shop:index' %}"><img
+                src="https://sun6-21.userapi.com/s/v1/ig2/f7j54uJOxTvGcu7F3WScCds9taznXHwiLJ_LRExy0p_B4ouhTnt9LNZiAn8trVgNCV-apSulGGdElFvMLgZkTnlu.jpg?size=800x800&quality=95&crop=0,0,800,800&ava=1"
+                height="40"/></a>
+{% block body %}
+{% endblock %}
+</body>
+</html>

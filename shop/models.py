@@ -13,7 +13,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField()
-    category_id = models.ForeignKey(Category, related_name='category', null=True, on_delete=models.SET_NULL)
+    category_id = models.ForeignKey(Category, related_name='products', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name

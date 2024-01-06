@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+    {% for category in categories %}
+        <ul>
+            <li><a href="{% url 'shop:category' category.id %}">{{ category.name }}</a></li>
+        {% for product in category.products.all %}
+            <ul>
+                <li>
+                    <a href="{% url 'shop:detail' product.id %}">{{ product.name }}</a>
+                </li>
+            </ul>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

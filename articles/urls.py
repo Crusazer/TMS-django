@@ -1,6 +1,9 @@
 from django.urls import path, register_converter
 from . import views
 
+app_name = 'articles'
 urlpatterns = [
-    path('articles/', views.articles, name='articles'),
+    path('', views.index, name='index'),
+    path('<int:article_id>', views.detail, name='article'),
+    path('<int:article_id>/like', views.like, name='like'),
 ]
