@@ -36,5 +36,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-
+    readonly_fields = ['first_name', "last_name", "date_of_birth", "articles"]
+    fieldsets = [
+        (None, {'fields': ['first_name', "last_name", "date_of_birth", "articles"]}),
+    ]
     inlines = (ArticleInline,)
