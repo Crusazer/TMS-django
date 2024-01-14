@@ -1,21 +1,36 @@
 from django.shortcuts import render, get_object_or_404
 
 from shop.models import Category, Product
+from django.views import generic
 
 
 # Create your views here.
-def index(request):
-    context = {'categories': Category.objects.all().order_by('name')}
-    return render(request, 'shop/index.html', context=context)
+class IndexView(generic.TemplateView):
+    template_name = "shop/index.html"
 
 
-def detail(request, product_id: int):
-    product = get_object_or_404(Product, id=product_id)
-    context = {'product': product}
-    return render(request, 'shop/detail.html', context=context)
+class ProductsView(generic.ListView):
+    paginate_by = 2
+    model = Product
+    context_object_name = "products"
+    template_name = "shop/products.html"
 
 
-def category(request, category_id: int):
-    category = get_object_or_404(Category, id=category_id)
-    context = {'category': category}
-    return render(request, 'shop/category.html', context=context)
+class ProductDetailView(generic.DetailView):
+    model = Product
+    pk_url_kwarg = "product_id"
+    context_object_name = "product"
+    template_name = "shop/product.html"
+
+
+class CategoryDetailView(generic.DetailView):
+    model = Category
+    pk_url_kwarg = "category_id"
+    context_object_name = "category"
+    template_name = "shop/category.html"
+
+
+class CategoriesView(generic.ListView):
+    model = Category
+    context_object_name = "categories"
+    template_name = "shop/categories.html"

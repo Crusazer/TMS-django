@@ -9,6 +9,7 @@ from polls.models import Question, Choice
 
 from .signals import *
 
+
 # Create your views here.
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
@@ -22,7 +23,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/detail.html"
+    template_name = "polls/product.html"
 
     def get_queryset(self):
         """ Return APPROVED, already published questions """
@@ -34,36 +35,18 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
-# def index(request):
-#     latest_question_list = Question.objects.filter(status=Question.Status.APPROVED).order_by('-pub_date')[:5]
-#     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'polls/index.html', context)
-
-
-# def detail(request, question_id: int):
-#     question = get_object_or_404(Question, id=question_id, status=Question.Status.APPROVED)
-#     context = {'question': question}
-#     return render(request, 'polls/detail.html', context)
-
-
 def vote(request, question_id: int):
     question = get_object_or_404(Question, id=question_id, status=Question.Status.APPROVED)
     try:
         selected_choice = question.choices.get(id=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {
+        return render(request, 'polls/product.html', {
             'error_message': "You didn't select a choice",
             'question': question,
         })
     selected_choice.votes += 1
     selected_choice.save()
     return redirect('polls:results', question.id)
-
-
-# def results(request, question_id: int):
-#     question = get_object_or_404(Question, id=question_id)
-#     context = {'question': question}
-#     return render(request, 'polls/results.html', context)
 
 
 def create_question(request):

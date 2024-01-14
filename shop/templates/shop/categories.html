@@ -1,0 +1,24 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+<br>
+<div>
+    <h2 align="center">Categories</h2>
+</div>
+
+{% for category in categories %}
+<ul>
+    <li>
+        <a href="{% url 'shop:category' category.id %}">{{ category.name }}</a>
+        {% for product in category.products.all %}
+    </li>
+    <ul>
+        <li>
+            <a href="{% url 'shop:product' product.id %}">{{ product.name }}</a>
+        </li>
+    </ul>
+    {% endfor %}
+
+</ul>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+<h2 align="center">
+    Category: <a href="{% url 'shop:category' product.category.id %}"> {{ product.category.name }}</a>
+</h2>
+<h3 align="center">{{ product.name }}</h3>
+<ul>
+
+    Description: {{ product.description }}
+</ul>
+<ul>
+    Price: {{ product.price }}
+</ul>
+
+{% endblock %}

@@ -22,8 +22,30 @@ xDY6cOwkcDZHAO6oxmZJRWxy2Jg38fFUe_QefYGQ1_zWpVQKd3Z8xMFq7v4qNHc_OBYw_lp0_g=s900-
     </div>
 
 </div>
+<nav class="navbar navbar-light bg-light">
+    <div class="nav-item">
+        <a href="{% url 'shop:products' %}" class="btn btn-warning navbar-brand">All products</a>
+        <a href="{% url 'shop:categories' %}" class="btn btn-warning navbar-brand">All categories</a>
+        <a href="{% url 'shop:categories' %}" class="btn btn-warning navbar-brand">Cart</a>
+    </div>
+    <div class="nav-item">
+    {% if user.is_authenticated %}
+        Добро пожаловать <b>{{ user }}</b>
+            <form action="{% url 'logout' %}?next={{ request.path }}" method="post" class="form-inline">
+                {% csrf_token %}
+                <input type="submit" value="Logout" class="btn btn-danger form-control mr-sm-2"/>
+            </form>
+    {% else %}
+
+    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Login</a>
+    <a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Register</a>
+    {% endif %}
+    </div>
 
 
+</nav>
+<div>
 {% block body %}{% endblock %}
+</div>
 </body>
 </html>

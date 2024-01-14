@@ -21,3 +21,4 @@ def populate_polls_database(path: str, clean_database: bool = False):
 
     except FileNotFoundError:
         print(f'Файл {path} не был найден!')
+

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -14,6 +15,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', db_index=True)
     status = models.CharField(max_length=2, choices=Status, default=Status.NEW)
+    objects: QuerySet = models.Manager()
 
     def __str__(self):
         return self.question_text

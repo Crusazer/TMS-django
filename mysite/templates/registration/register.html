@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>{% block title %}Polls APP{% endblock %}</title>
+    <title>Register</title>
+    <meta name="viewport" content="width-device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/morph/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 <a href="{% url 'polls:index' %}"><img src="https://netstorage.ringcentral.com/appext/logo/
@@ -27,9 +29,31 @@ xDY6cOwkcDZHAO6oxmZJRWxy2Jg38fFUe_QefYGQ1_zWpVQKd3Z8xMFq7v4qNHc_OBYw_lp0_g=s900-
 </div>
 {% else %}
 <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-info">Login</a>
-<a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-info">Register</a>
 {% endif %}
-{% block body %}
-{% endblock %}
+
+{% if form.errors %}
+<p align="center" style="color: red">Your input incorrect. Please try again.</p>
+{% endif %}
+<div class="container bg-white p-5" style="width:520px;">
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit" class="btn btn-secondary btn-lg w-100 btn-block p-4"> &nbsp; Create account</button>
+</form>
+</div>
+
+
 </body>
 </html>
+

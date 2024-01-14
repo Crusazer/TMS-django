@@ -13,19 +13,18 @@ def index(request):
 
 def detail(request, article_id: int):
     article = get_object_or_404(Article, id=article_id)
-    votes = article.users.aggregate(count=Count('id'))['count']
-    authors = article.authors.all()
-    context = {'article': article, 'votes': votes, 'authors': authors}
+    votes = article.liked_users.count()
+    context = {'article': article, 'votes': votes}
     return render(request, 'articles/article.html', context)
 
 
 def like(request, article_id: int):
     article = get_object_or_404(Article, pk=article_id)
-    user = article.users.filter(pk=1)
+    user = article.liked_users.filter(pk=1)
     if user:
-        article.users.remove(User.objects.get(pk=1))
+        article.liked_users.remove(User.objects.get(pk=1))
     else:
-        article.users.add(User.objects.get(pk=1))
+        article.liked_users.add(User.objects.get(pk=1))
     return redirect('articles:article', article_id=article_id)
 
 

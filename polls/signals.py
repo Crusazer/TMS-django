@@ -34,7 +34,6 @@ def post_delete_signal_from_question(sender, instance, **kwargs):
     print(f"Choice object deleted. Sender: {sender}, \tInstance: {instance}, \tkwargs: {kwargs}")
 
 
-# TODO: question for master. Why it isn't work.
-# @receiver(signals.post_init, sender=Choice)
-# def post_init_signal_from_question(sender, instance, **kwargs):
-#     print(f"Choice post init. sender: {sender}, \tinstance: {instance}")
+@receiver(signals.post_init, sender=Choice)
+def post_init_signal_from_question(sender, instance, **kwargs):
+    print(f"Choice post init. sender: {sender}, \tinstance: {instance}")

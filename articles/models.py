@@ -15,11 +15,12 @@ class Author(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+
 class Article(models.Model):
     title = models.CharField(max_length=200)
     text = models.CharField()
 
-    users = models.ManyToManyField(User, related_name="articles", blank=True)
+    liked_users = models.ManyToManyField(User, related_name="liked_articles", blank=True)
     authors = models.ManyToManyField(Author, related_name="articles", blank=False)
 
     def __str__(self):
@@ -30,10 +31,10 @@ class Article(models.Model):
         boolean=True,
     )
     def is_popular(self):
-        return self.users.aggregate(count=Count('id'))['count'] > 100
+        return self.liked_users.count() > 100
 
     @admin.display(
         description="Count likes"
     )
     def count_likes(self):
-        return self.users.aggregate(count=Count('id'))['count']
+        return self.liked_users.count()
