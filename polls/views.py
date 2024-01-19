@@ -59,6 +59,7 @@ def create_question(request):
             question.save()
             for choice_text in form.cleaned_data['choices'].split('\n'):
                 question.choices.create(choice_text=choice_text, votes=0)
+
             messages.success(request, 'Your question is have been added and '
                                       'It will be displayed once reviewed by administrator')
             return redirect('polls:index')

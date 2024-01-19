@@ -1,0 +1,75 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row-12">
+        <h2 align="center">Your profile</h2>
+    </div>
+
+    <!-- Fields of user -->
+    <div class="row">
+
+        <form action="{% url 'shop:user_profile' %}" method="post">
+            {% csrf_token %}
+            Username:
+            <input type="text" name="username" value="{{ user.username }}">
+            <input type="hidden" name="action" value="username">
+            <input type="submit" value="Change" class="btn btn-info btn-sm">
+        </form>
+    </div>
+
+    <div class="row" style="margin-top: 10px">
+        <p>Password: {{ user.password }}</p>
+    </div>
+
+    <div class="row">
+        <form action="{% url 'shop:user_profile' %}" method="post">
+            {% csrf_token %}
+            First name:
+            <input type="text" name="first_name" value="{{ user.first_name|default:'None' }}">
+            <input type="hidden" name="action" value="first_name">
+            <input type="submit" value="Change" class="btn btn-info btn-sm">
+        </form>
+    </div>
+
+    <div class="row" style="margin-top: 10px">
+        <form action="{% url 'shop:user_profile' %}" method="post">
+            {% csrf_token %}
+            Last name:
+            <input type="text" name="last_name" value="{{ user.last_name|default:'None' }}">
+            <input type="hidden" name="action" value="last_name">
+            <input type="submit" value="Change" class="btn btn-info btn-sm">
+        </form>
+    </div>
+
+    <div class="row" style="margin-top: 10px">
+        <form action="{% url 'shop:user_profile' %}" method="post">
+            {% csrf_token %}
+            Email address:
+            <input type="text" name="email" value="{{ user.email|default:'None' }}">
+            <input type="hidden" name="action" value="email">
+            <input type="submit" value="Change" class="btn btn-info btn-sm">
+        </form>
+    </div>
+
+    <div class="col-md" style="margin-top: 10px">
+        <p>Date joined: {{ user.date_joined}}</p>
+    </div>
+
+    <!-- Last 5 orders of user -->
+    <div class="row">
+        <div class="col-12"><h2 align="center">Last orders</h2></div>
+        <div class="row">
+            <a href="{% url 'shop:order_history' %}" class="btn btn-warning btn-lg btn-block">Show order history</a>
+        </div>
+        {% for order in last_five_orders %}
+        {{ order }}
+        <p>Status: {{ order.get_status_display }} <br>
+        Total: {{ order.total_price_db }} <br>
+        Number of goods: {{ order.total_count }}</p>
+        <hr>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

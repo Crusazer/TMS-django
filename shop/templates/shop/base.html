@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>{% block title %}Shop APP{% endblock %}</title>
 </head>
 <body>
@@ -26,26 +26,29 @@ xDY6cOwkcDZHAO6oxmZJRWxy2Jg38fFUe_QefYGQ1_zWpVQKd3Z8xMFq7v4qNHc_OBYw_lp0_g=s900-
     <div class="nav-item">
         <a href="{% url 'shop:products' %}" class="btn btn-warning navbar-brand">All products</a>
         <a href="{% url 'shop:categories' %}" class="btn btn-warning navbar-brand">All categories</a>
-        <a href="{% url 'shop:categories' %}" class="btn btn-warning navbar-brand">Cart</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'shop:shopping_cart' %}" class="btn btn-warning navbar-brand">Cart</a>
+        <a href="{% url 'shop:user_profile' %}" class="btn btn-warning navbar-brand">Profile</a>
+        {% endif %}
     </div>
     <div class="nav-item">
-    {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
         Добро пожаловать <b>{{ user }}</b>
-            <form action="{% url 'logout' %}?next={{ request.path }}" method="post" class="form-inline">
-                {% csrf_token %}
-                <input type="submit" value="Logout" class="btn btn-danger form-control mr-sm-2"/>
-            </form>
-    {% else %}
+        <form action="{% url 'logout' %}?next={{ request.path }}" method="post" class="form-inline">
+            {% csrf_token %}
+            <input type="submit" value="Logout" class="btn btn-danger form-control mr-sm-2"/>
+        </form>
+        {% else %}
 
-    <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Login</a>
-    <a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Register</a>
-    {% endif %}
+        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Login</a>
+        <a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-info navbar-brand">Register</a>
+        {% endif %}
     </div>
 
 
 </nav>
 <div>
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 </body>
 </html>

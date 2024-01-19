@@ -21,14 +21,15 @@ xDY6cOwkcDZHAO6oxmZJRWxy2Jg38fFUe_QefYGQ1_zWpVQKd3Z8xMFq7v4qNHc_OBYw_lp0_g=s900-
 
         <div style="float:left; with: 20%; overflow: hidden; padding-top: 8px">Добро пожаловать <b>{{ user }} </b></div>
         <div>
-            <form action="{% url 'logout' %}?next={{ request.path }}" method="post">
+            <form action="{% url 'logout' %}?next={{ next }}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Logout" class="btn btn-danger"/>
             </form>
         </div>
 
         {% else %}
-        <a href="{% url 'register' %}?next={{ request.path }}" class="btn btn-info">Register</a>
+        <a href="{% url 'register' %}?next={{ next }}" class="btn btn-info">Register</a>
+        <b>Next: {{ next }}</b>
         {% endif %}
         {% if form.errors %}
         <p>Your username and password didn't mathc. Please try again.</p>

@@ -1,16 +1,64 @@
 {% extends 'shop/base.html' %}
 
 {% block body %}
-<h2 align="center">
-    Category: <a href="{% url 'shop:category' product.category.id %}"> {{ product.category.name }}</a>
-</h2>
-<h3 align="center">{{ product.name }}</h3>
-<ul>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 align="center">
+                Category: <a href="{% url 'shop:category' product.category.id %}"> {{ product.category.name }}</a>
+            </h2>
+            <h3 align="center">{{ product.name }}</h3>
+            <p class="text-justify">
+                <b>Description:</b> {{ product.description }}
+            </p>
+            <p class="text-justify">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum natus quod recusandae sequi sit? Adipisci
+                aliquam asperiores beatae consequatur, consequuntur dignissimos doloremque dolores doloribus enim eum
+                explicabo hic ipsa ipsam laudantium minima molestias nesciunt nulla officia, perferendis possimus
+                repellat repudiandae saepe sit temporibus velit? Aperiam enim illum necessitatibus neque quidem, rerum
+                voluptates! Ad alias aliquam aperiam at aut commodi consectetur culpa delectus distinctio doloribus ea
+                eius error est, et excepturi incidunt inventore ipsa ipsam iusto laborum magni natus nobis officia
+                pariatur perferendis quia quos reiciendis repellendus saepe sunt tempore vero voluptatibus voluptatum.
+                Aliquid aspernatur assumenda at consequatur deleniti inventore iure, modi officia quibusdam quisquam
+                repellendus similique soluta. Accusantium ad aliquid dolore et, explicabo fugiat iusto laboriosam libero
+                nesciunt optio quas voluptas voluptatem? Adipisci culpa illum laborum odio quidem sequi! Consectetur ea
+                enim magni repudiandae! Aliquam aperiam atque culpa eaque eos eum, hic, ipsum iusto nobis odio
+                repellendus sed sunt tempora tenetur ut veniam voluptatum. Alias, aspernatur fuga modi numquam quam
+                tempore velit. Adipisci aperiam aspernatur minus nostrum veniam! Deserunt ea error neque nesciunt
+                numquam officia praesentium quidem, quos ratione veniam! Accusantium ad beatae blanditiis corporis enim
+                eos error fuga ipsam laborum, maxime nam natus officiis provident quod reprehenderit sapiente sequi
+                similique sit unde velit. Aspernatur consectetur, eum expedita facilis impedit laudantium mollitia quam
+                soluta voluptas voluptatibus! Aliquam aperiam cupiditate debitis doloribus illum officiis sequi ut.
+                Assumenda delectus dolorem doloribus et eveniet hic, id illum in ipsam ipsum laboriosam magni, maiores
+                mollitia necessitatibus numquam pariatur qui quia, quibusdam suscipit voluptate! Ab accusantium alias
+                culpa deleniti dolorem doloremque ea et eveniet, ex, id incidunt modi molestiae necessitatibus nemo non
+                officiis perspiciatis qui quia quo quos rem rerum tenetur totam ut vel velit vitae, voluptate! Assumenda
+                blanditiis dolorum eaque eius eos excepturi id laboriosam nulla odio praesentium provident quas quis
+                quisquam quo quos, sequi voluptatem? Amet atque illo ipsa! Ab accusamus ad adipisci alias amet
+                architecto atque commodi culpa doloribus earum, eligendi error exercitationem fuga id illum iure iusto
+                laboriosam laborum maiores nam neque non placeat qui quibusdam quisquam rem repellat repudiandae
+                sapiente sed sint soluta suscipit tempore unde! Accusamus animi, aperiam, aspernatur at ducimus eaque ex
+                expedita explicabo incidunt ipsum iusto laboriosam molestiae mollitia quaerat quam qui quod recusandae
+                temporibus. Amet assumenda deleniti eaque eius laborum laudantium nam ratione sed similique vero?
+                Accusantium error eveniet exercitationem illo, quas quis saepe. Ad, adipisci aliquid ex, labore
+                laboriosam magni nemo omnis, quae quaerat quibusdam quo reiciendis! Accusantium amet aspernatur
+                assumenda consequuntur cumque dolores ex iusto, magnam minus nihil quaerat quam recusandae similique
+                voluptate voluptatum! A ab accusamus accusantium adipisci eligendi et eum quidem quisquam repellendus
+                saepe. Accusantium amet assumenda at cum cupiditate dolorem ea eaque earum eius error ex exercitationem
+                facere fuga ipsam iste labore laudantium magnam minus nemo non omnis perferendis porro possimus quae
+                quam, reprehenderit saepe sed sequi soluta tempora unde veniam veritatis voluptate. Accusantium ad
+                adipisci at consequuntur corporis culpa debitis dolore dolorem eius eligendi fugiat incidunt inventore
+                libero, magni mollitia nemo optio qui quidem quis quo quos repellendus soluta temporibus?
+            </p>
+        </div>
+        <div class="col-5">
+            Price: {{ product.price }}
+            <div>
+                <a href="{% url 'shop:add_to_cart' product.id %}?next={{ request.path }}" class="btn btn-warning navbar-brand">Add to cart</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    Description: {{ product.description }}
-</ul>
-<ul>
-    Price: {{ product.price }}
-</ul>
 
 {% endblock %}

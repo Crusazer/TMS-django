@@ -1,0 +1,62 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row-12">
+        <h3 align="center">My shopping cart</h3>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <!-- Show all products -->
+        <div class="row-12">
+            {% for order_entry in shopping_cart %}
+            <div class="col"><a href="{% url 'shop:product' order_entry.product.id %}" class="text-justify">
+                {{ order_entry.product.name }}</a>
+            </div>
+            <div class="col">Price: {{ order_entry.product.price }} rub for 1</div>
+            <div class="row">
+                <div class="col-md-5">
+                    <form action="{% url 'shop:shopping_cart' %}?method=update" method="post" class="form-inline">
+                        {% csrf_token %}
+                        Count: <input type="number" name="count" value="{{ order_entry.count }}">
+                        <input type="hidden" name="id" value="{{ order_entry.id }}">
+                        <input type="submit" value="Update" class="btn btn-info">
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <form action="{% url 'shop:shopping_cart' %}?method=delete" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ order_entry.id }}">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+        <!-- Footer -->
+        <p>Total: <b>{{ total }}</b> rub.</p>
+        <div class="row">
+            <div class="col-md-2">
+                <form action="{% url 'shop:shopping_cart' %}?method=confirm" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Confirm order" class="btn btn-success btn-sm">
+                </form>
+            </div>
+            <div class="col-md-2">
+                <form action="{% url 'shop:shopping_cart' %}?method=clear" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Clear shopping cart" class="btn btn-danger btn-sm">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

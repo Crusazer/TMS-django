@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from .models import Article, Author
 from django.shortcuts import get_object_or_404

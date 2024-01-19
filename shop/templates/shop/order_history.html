@@ -1,0 +1,58 @@
+{% extends 'shop/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row-12">
+        <h2 align="center">Order history</h2>
+    </div>
+
+    {% for order in orders %}
+    <div class="row">
+        {{ order }} <br>
+        {% for order_entry in order.order_entries.all %}
+        <div class="row">
+            <div class="col"><a href="{% url 'shop:product' order_entry.product.id %}" class="text-justify">
+                {{ order_entry.product.name }}</a>
+            </div>
+            <div class="col">Price: {{ order_entry.product.price }} rub for 1</div>
+            <div class="col">Number: {{ order_entry.count }}</div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <form action="{% url 'shop:order_history' %}" method="post" class="form-inline">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order.id }}">
+            <input type="submit" class="btn btn-warning" value="Repeat order">
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
