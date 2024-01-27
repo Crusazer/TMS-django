@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from django.views import generic
+from django.views.decorators.cache import cache_page
 
 from polls.forms import QuestionForm
 from polls.models import Question, Choice
@@ -20,10 +21,13 @@ class IndexView(generic.ListView):
         return Question.objects.filter(status=Question.Status.APPROVED, pub_date__lte=timezone.now()).order_by(
             "-pub_date")[:5]
 
+    def get(self, request, *args, **kwargs):
+        return super().get(self, request, *args, **kwargs)
+
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/product.html"
+    template_name = "polls/detail.html"
 
     def get_queryset(self):
         """ Return APPROVED, already published questions """

@@ -3,9 +3,11 @@ from functools import reduce
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.db.models import F, Sum, ExpressionWrapper, IntegerField
+from django.db.models import F
 from django.http import HttpRequest
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic.detail import SingleObjectMixin
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -16,6 +18,10 @@ from django.views import generic
 # Create your views here.
 class IndexView(generic.TemplateView):
     template_name = "shop/index.html"
+
+    @method_decorator(cache_page(60 * 15))
+    def get(self, *args, **kwargs):
+        return super().get(self, *args, **kwargs)
 
 
 class ProductsView(generic.ListView):
@@ -160,7 +166,8 @@ class OrderHistory(LoginRequiredMixin, generic.ListView):
         # load order_entries to shoppingcart from selected order
         OrderEntry.objects.bulk_create(
             OrderEntry(count=order_entry.count, product=order_entry.product, order=shopping_cart) for order_entry in
-             order.order_entries.all())
+            order.order_entries.all())
 
         messages.success(request, "Order successfully placed into your shoppingcart")
         return redirect(reverse("shop:shopping_cart"))
+

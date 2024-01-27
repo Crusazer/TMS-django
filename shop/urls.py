@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from django.urls import path, register_converter, include
 from . import views
 
 app_name = 'shop'

@@ -24,6 +24,8 @@ from mysite import views
 urlpatterns = [
     # path('accounts/login/', LoginView.as_view(), name='login'),
     # path('accounts/logout/', LogoutView.as_view(), name='logout'),
+
+    path('__debug__/', include('debug_toolbar.urls')),
     path('register', views.register, name="register"),
     path("accounts/", include("django.contrib.auth.urls")),
     path('polls/', include('polls.urls')),
@@ -31,4 +33,5 @@ urlpatterns = [
     path('shop/', include('shop.urls')),
     path('admin/', admin.site.urls),
     path('auth/', auth_views.LoginView.as_view()),
+    path('api/', include('api.urls')),
 ]

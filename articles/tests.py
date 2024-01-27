@@ -57,6 +57,6 @@ class ModelArticleTest(TestCase):
         self.assertEquals(article.is_popular(), False)
 
         for user in UserFactory.create_batch(101):
-            article.users.add(user)
+            article.liked_users.add(user)
 
         self.assertEquals(article.is_popular(), True)

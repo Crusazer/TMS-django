@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from .forms import CreateUserForm
@@ -6,6 +7,9 @@ from django.http import HttpRequest
 
 
 def register(request: HttpRequest):
+    if request.user.is_authenticated:
+        return redirect(request.GET.get("next", "/shop"))
+
     if request.method == "POST":
         form = CreateUserForm(request.POST)
 

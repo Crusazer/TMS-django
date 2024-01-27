@@ -1,0 +1,42 @@
+{
+  "Categories": [
+    "Fruit",
+    "Vegetables"
+  ],
+  "Products": [
+    [
+      "Apple",
+      "It's just apple",
+      5,
+      "Fruit"
+    ],
+    [
+      "Banana",
+      "It's just banana",
+      10,
+      "Fruit"
+    ],
+    [
+      "Carrot",
+      "It's just carrot",
+      3,
+      "Vegetables"
+    ],
+    [
+      "Tomato",
+      "It's just tomato",
+      15,
+      "Vegetables"
+    ]
+  ],
+  "Users": [
+    [
+      "NoName",
+      "1"
+    ],
+    [
+      "NoName2",
+      "1"
+    ]
+  ]
+}
