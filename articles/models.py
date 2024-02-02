@@ -17,7 +17,7 @@ class Author(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
-    text = models.CharField()
+    text = models.TextField()
 
     liked_users = models.ManyToManyField(User, related_name="liked_articles", blank=True)
     authors = models.ManyToManyField(Author, related_name="articles", blank=False)
