@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4w_je2#j==s!lg!#hl8$#^2uv=w8srx9puf)rd42r-_ng=995#
 DEBUG = True
 ATOMIC_REQUESTS = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

@@ -40,7 +40,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    readonly_fields = ['first_name', "last_name", "date_of_birth", "articles"]
+    readonly_fields = ["articles"]
     fieldsets = [
         (None, {'fields': ['first_name', "last_name", "date_of_birth"]}),
         ("Created articles", {"fields": ["articles"]})

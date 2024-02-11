@@ -28,3 +28,7 @@ def register(request: HttpRequest):
 
     context = {"form": form, "next": request.GET.get("next", 'shop/')}
     return render(request, "registration/register.html", context=context)
+
+
+def base(request: HttpRequest):
+    return redirect('shop/')
