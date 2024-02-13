@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=django
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+    networks:
+      - mynetwork
+
+  cache:
+    image: redis
+    networks:
+      - mynetwork
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crusazer/tms_django_project:1.5
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/code
+    networks:
+      - mynetwork
+    
+networks:
+  mynetwork:
+
