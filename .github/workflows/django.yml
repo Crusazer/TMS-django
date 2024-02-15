@@ -27,7 +27,9 @@ jobs:
         pip install -r requirements.txt
     - name: docker compose
       run: |
-        docker compose up
+        docker compose up -d
+        docker compose down
+        docker compose up -d
     - name: Run Tests
       run: |
         python manage.py test
