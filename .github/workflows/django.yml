@@ -32,7 +32,7 @@ jobs:
         docker compose up -d
     - name: Run Tests
       run: |
-        docker run --rm -tms-django-web-1 python manage.py makemigrations
+        docker run --rm tms-django-web-1 python manage.py makemigrations
         docker logs tms-django-web-1
         docker run --rm tms-django-web-1 python manage.py migrate
         docker run --rm tms-django-web-1 python manage.py test    
