@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - cache
+    volumes:
+      - .:/TMS-django
+    networks:
+      - mynetwork
+      
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=django
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/
+    networks:
+      - mynetwork
+
+  cache:
+    image: redis
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  pgdata:
+  
