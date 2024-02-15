@@ -32,6 +32,6 @@ jobs:
         docker compose up -d
     - name: Run Tests
       run: |
-        docker exec -it tms-django-web sh
+        docker exec -it tms-django-web-1 sh
         python manage.py test
         exit
