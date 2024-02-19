@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, status
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from articles.models import Article
 from polls.models import Question, Choice
@@ -73,3 +76,23 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["id", "name"]
+
+
+# ________________USERS_________________________
+class UserCreateView(APIView):
+    serializers_class = serializers.UserSerializer
+
+    def post(self, request):
+        serializer = self.serializers_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request: Request, pk: int):
+        user = User.objects.get(pk=pk)
+        serializer = self.serializers_class(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

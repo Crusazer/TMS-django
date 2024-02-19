@@ -1,8 +1,12 @@
+from django.contrib.admin.templatetags.admin_list import results
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
 import json
+
+from rest_framework.response import Response
 
 from articles.models import Article
 from shop.models import Category, Product
@@ -208,3 +212,29 @@ class ProductViewTest(TestCase, TestMixin):
                                       price=100),
             self.model.objects.create(category=self.related_objects[0], name=self.answers[1], description="description",
                                       price=100)]
+
+
+class CreateUserViewTest(TestCase):
+    # ___POST____
+    def setup(self):
+        self.data = {"first_name": "first_name", "last_name": "second_name", 'username': 'test_user',
+                     'email': 'test@example.com', 'password': 'test_password', 'password2': 'test_password'}
+        self.update_data = {"first_name": "first_name", "last_name": "second_name", 'username': 'updated_user',
+                            'email': 'updated@example.com', 'password': 'test_password', 'password2': 'test_password'}
+        self.url = reverse('register')
+
+    def test_create_user(self):
+        self.setup()
+        response = self.client.post(self.url, self.data, format="json")
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+        self.assertEquals(User.objects.count(), 1)
+        self.assertEqual(User.objects.get().username, 'test_user')
+
+    def test_update_user(self):
+        self.setup()
+        self.user = User.objects.create(username='test_user', email='test@example.com', password='test_password')
+        response = self.client.put(reverse("update_user", kwargs={'pk': self.user.pk}), self.update_data,
+                                   content_type="application/json")
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(User.objects.get().username, 'updated_user')
+        self.assertEquals(User.objects.get().email, 'updated@example.com')

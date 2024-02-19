@@ -2,10 +2,11 @@ asgiref==3.7.2
 asttokens==2.4.1
 async-timeout==4.0.3
 decorator==5.1.1
-Django==5
+Django==5.0
 django-cors-headers==4.3.1
 django-debug-toolbar==4.2.0
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.1
 exceptiongroup==1.2.0
 executing==2.0.1
 fake.py==0.6.5
@@ -21,6 +22,7 @@ psycopg2-binary==2.9.9
 ptyprocess==0.7.0
 pure-eval==0.2.2
 Pygments==2.17.2
+PyJWT==2.8.0
 python-dateutil==2.8.2
 pytz==2023.3.post1
 redis==5.0.1
