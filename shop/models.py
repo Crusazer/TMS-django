@@ -10,6 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     shopping_cart = models.OneToOneField("Order", related_name="+", on_delete=models.SET_NULL, null=True, blank=True)
     objects: QuerySet
+    orders: QuerySet
 
     def __str__(self):
         return f"Profile: {self.user.username}"
@@ -43,6 +44,7 @@ class Order(models.Model):
     profile = models.ForeignKey(Profile, related_name="orders", on_delete=models.CASCADE, blank=False)
     status = models.CharField(max_length=2, choices=Status, default=Status.INITIAL)
     objects: QuerySet
+    order_entries: QuerySet
 
     def __str__(self):
         if self.status == "IN":

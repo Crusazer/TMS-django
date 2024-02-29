@@ -3,6 +3,8 @@ from django.db.models.functions import Length
 from rest_framework import filters
 from rest_framework.request import Request
 
+from api.serializers import CategorySerializer
+
 
 class MinChoiceCountFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request: Request, queryset: QuerySet, view):
@@ -25,4 +27,20 @@ class MinArticleTextLength(filters.BaseFilterBackend):
         min_article_text_length = request.query_params.get("min_article_text_length")
         if min_article_text_length:
             queryset = queryset.annotate(text_length=Length('text')).filter(text_length__gt=min_article_text_length)
+        return queryset
+
+
+class CategoryIdFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request: Request, queryset: QuerySet, view):
+        category_id = request.query_params.get("category_id")
+        if category_id:
+            queryset = queryset.filter(category__id=category_id)
+        return queryset
+
+
+class IncludeProductsFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request: Request, queryset: QuerySet, view):
+        include_products = request.query_params.get("include_products")
+        if include_products:
+            view.serializer_class = CategoriesSerializer
         return queryset

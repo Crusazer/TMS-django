@@ -4,7 +4,7 @@ from articles.models import Article
 from polls.models import Question, Choice
 from rest_framework import serializers
 
-from shop.models import Category, Product
+from shop.models import Category, Product, OrderEntry, Order
 
 
 # ________________________________________________POLLS_________________________________________________________________
@@ -39,6 +39,12 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        include_products = self.context['request'].query_params.get('include_products', 'true')
+        if include_products == 'false' and 'products' in self.fields:
+            self.fields.pop('products')
+        return super().to_representation(instance)
+
     products = ProductSerializer(many=True)
 
     class Meta:
@@ -46,7 +52,42 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class UpdateOrderEntrySerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    remove = serializers.BooleanField(required=False, default=False)
+    count = serializers.IntegerField(required=False, default=None, allow_null=True)
+
+
+class OrderSerializer(serializers.Serializer):
+    clear = serializers.BooleanField(required=False, default=False)
+    order_entries = UpdateOrderEntrySerializer(many=True, required=False, default=[])
+
+
+class OrderEntryModelSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = OrderEntry
+        fields = '__all__'
+
+
+class OrderModelSerializer(serializers.ModelSerializer):
+    order_entries = OrderEntryModelSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
 # ________________________________________________USERS_________________________________________________________________
+class UserModelSerializer(serializers.ModelSerializer):
+    # username = serializers.CharField(required=False)
+
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email", "username"]
+
+
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     first_name = serializers.CharField(max_length=30)
